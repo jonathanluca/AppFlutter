@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "913425052522",
+    "project_id": "rlts-jnt",
+    "storage_bucket": "rlts-jnt.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:913425052522:android:2abb7c648ed714656aeb13",
+        "android_client_info": {
+          "package_name": "com.example.appdois"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEV43dBv5tnh6jcXdsG6LlZ3r5zEYkUxI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
