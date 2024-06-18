@@ -1,11 +1,14 @@
 import 'package:appdois/pages/checar_page.dart';
 import 'package:appdois/pages/historico_page.dart';
+import 'package:appdois/pages/registro_servico.dart';
+import 'package:appdois/pages/adicionar_servico_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'adicionarServicoPage.dart';
+
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -17,7 +20,8 @@ class _HomePageState extends State<HomePage> {
   String email = '';
 
   @override
-  initState() {
+  void initState() {
+    super.initState();
     pegarUsuario();
   }
 
@@ -34,18 +38,18 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               dense: true,
-              title: Text('Sair'),
-              trailing: Icon(Icons.exit_to_app),
+              title: const Text('Sair'),
+              trailing: const Icon(Icons.exit_to_app),
               onTap: () {
                 sair();
               },
-            )
+            ),
           ],
         ),
       ),
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Home page'),
+        title: const Text('Home Page'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -57,33 +61,48 @@ class _HomePageState extends State<HomePage> {
           ),
           TextButton(
             onPressed: () {
-              HistoricoPage();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => RegistroServico(),
+                ),
+              );
             },
-            child: Text('Consultar Historico'),
+            child: const Text('Consultar Histórico'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AdicionarServicoPage(),
+                ),
+              );
+            },
+            child: const Text('Adicionar Serviço'),
           ),
         ],
       ),
     );
   }
 
-  pegarUsuario() async {
-    User? usuario = await _firebaseAuth.currentUser;
+  void pegarUsuario() async {
+    User? usuario = _firebaseAuth.currentUser;
     if (usuario != null) {
       setState(() {
-        nome = usuario.displayName!;
-        email = usuario.email!;
+        nome = usuario.displayName ?? 'Nome não disponível';
+        email = usuario.email ?? 'Email não disponível';
       });
     }
   }
 
-  sair() async {
-    await _firebaseAuth.signOut().then(
-          (user) => Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ChecarPage(),
-            ),
-          ),
-        );
+  void sair() async {
+    await _firebaseAuth.signOut();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChecarPage(),
+      ),
+    );
   }
 }
